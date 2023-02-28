@@ -1,5 +1,8 @@
 package ru.catunderglue;
 
+import ru.catunderglue.exception.IllegalEmailException;
+import ru.catunderglue.exception.SameLoginAndEmailException;
+
 public class User {
     private String login;
     private String email;
@@ -20,18 +23,18 @@ public class User {
         return email;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(String login) throws SameLoginAndEmailException{
         if (login.equals(this.email)){
-            throw new IllegalArgumentException("Почта и логин не должны совпадать!");
+            throw new SameLoginAndEmailException("Почта и логин не должны совпадать!");
         }
         this.login = login;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(String email) throws SameLoginAndEmailException, IllegalEmailException{
         if (email.equals(this.login)){
-            throw new IllegalArgumentException("Почта и логин не должны совпадать!");
+            throw new SameLoginAndEmailException("Почта и логин не должны совпадать!");
         } else if (!isEmailValid(email)) {
-            throw new IllegalArgumentException("Укажите актуальную почту!");
+            throw new IllegalEmailException("Укажите актуальную почту!");
         }
         this.email = email;
     }

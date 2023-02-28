@@ -3,6 +3,8 @@ package ru.catunderglue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import ru.catunderglue.exception.IllegalEmailException;
+import ru.catunderglue.exception.SameLoginAndEmailException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,7 +17,7 @@ public class UserTest {
 
     @Test
     @DisplayName("Пользователь успешно создан и поля инициализированы")
-    public void shouldCreateUserAllArgs() {
+    public void shouldCreateUserWithAllArgs() {
         User user = new User(NORMAL_LOGIN, NORMAL_EMAIL);
         assertEquals(NORMAL_LOGIN, user.getLogin());
         assertEquals(NORMAL_EMAIL, user.getEmail());
@@ -23,19 +25,19 @@ public class UserTest {
 
     @Test
     @DisplayName("Пользователь успешно создан без параметров")
-    public void shouldCreateUserNoArgs() {
+    public void shouldCreateUserWithNoArgs() {
         assertDoesNotThrow(() -> new User());
     }
 
     @Test
     @DisplayName("Почта должна содержать \"@\" и \".\"")
-    public void isEmailValidCheck() {
-        assertThrows(IllegalArgumentException.class, () -> new User(NORMAL_LOGIN, ILLEGAL_EMAIL));
+    public void shouldThrowIllegalEmailExceptionWhileCreatingUser() {
+        assertThrows(IllegalEmailException.class, () -> new User(NORMAL_LOGIN, ILLEGAL_EMAIL));
     }
 
     @Test
     @DisplayName("Почта не должна совпадать с логином")
-    public void isEmailEqualsLogin() {
-        assertThrows(IllegalArgumentException.class, () -> new User(LOGIN_EQUALS_EMAIL, NORMAL_EMAIL));
+    public void shouldThrowSameLoginAndEmailExceptionWhileCreatingUser() {
+        assertThrows(SameLoginAndEmailException.class, () -> new User(LOGIN_EQUALS_EMAIL, NORMAL_EMAIL));
     }
 }
