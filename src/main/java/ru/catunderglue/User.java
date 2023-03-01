@@ -29,6 +29,22 @@ public class User {
         return email;
     }
 
+    public void setLogin(String login) throws SameLoginAndEmailException{
+        if (login.equals(this.email)){
+            throw new SameLoginAndEmailException("Почта и логин не должны совпадать!");
+        }
+        this.login = login;
+    }
+
+    public void setEmail(String email) throws SameLoginAndEmailException, IllegalEmailException{
+        if (email.equals(this.login)){
+            throw new SameLoginAndEmailException("Почта и логин не должны совпадать!");
+        } else if (!isEmailValid(email)) {
+            throw new IllegalEmailException("Укажите актуальную почту!");
+        }
+        this.email = email;
+    }
+
     private boolean isEmailValid(String email){
         return email.contains("@") && email.contains(".");
     }
