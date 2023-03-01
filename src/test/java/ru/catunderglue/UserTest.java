@@ -24,20 +24,22 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("Пользователь успешно создан без параметров")
+    @DisplayName("Пользователь успешно создан без параметров и поля инициализированы null'ами")
     public void shouldCreateUserWithNoArgs() {
-        assertDoesNotThrow(() -> new User());
+        User user = new User();
+        assertNull(user.getEmail());
+        assertNull(user.getLogin());
     }
 
     @Test
-    @DisplayName("Почта должна содержать \"@\" и \".\"")
-    public void shouldThrowIllegalEmailExceptionWhileCreatingUser() {
+    @DisplayName("Ошибка при некорректной почте, без \"@\" или \".\"")
+    public void shouldThrowIllegalEmailExcWhenCreatingUser() {
         assertThrows(IllegalEmailException.class, () -> new User(NORMAL_LOGIN, ILLEGAL_EMAIL));
     }
 
     @Test
-    @DisplayName("Почта не должна совпадать с логином")
-    public void shouldThrowSameLoginAndEmailExceptionWhileCreatingUser() {
+    @DisplayName("Ошибка при создании user'a с одинаковой почтой и логином")
+    public void shouldThrowSameLoginAndEmailExcWhenCreatingUser() {
         assertThrows(SameLoginAndEmailException.class, () -> new User(LOGIN_EQUALS_EMAIL, NORMAL_EMAIL));
     }
 }
