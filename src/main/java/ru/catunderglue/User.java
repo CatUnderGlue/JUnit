@@ -46,6 +46,6 @@ public class User {
     }
 
     private boolean isEmailValid(String email){
-        return email.contains("@") && email.contains(".");
+        return email.matches("^[a-zA-z0-9._-]+@[a-zA-z0-9-]+.[a-zA-z]{2,4}$");
     }
 }
